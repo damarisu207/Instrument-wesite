@@ -1,0 +1,244 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{ padding: 40px; }
+
+
+
+
+#red-painting {
+    background-color: rgb(211, 25, 12);
+    height: 200px;
+    width: 200px;
+    display:flex;
+    justify-content: center;
+    align-items:last baseline;
+    padding: 10px;
+}
+
+#red-orange {
+    background-color: rgb(157, 29, 13);
+    height: 170px;
+    width: 170px;
+    display:flex;
+    justify-content: center;
+    align-items:last baseline;
+    padding: 5px;
+}
+
+#burgandy {
+    background-color: #800020;
+    height: 140px;
+    width: 140px;
+}
+
+#white-box {
+    background-color: rgb(208, 204, 204);
+    height: 200px;
+    width: 200px;
+    margin-top: 20px;
+    border: 0.5px solid black;
+    }
+
+#top-box {
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    Height: 70%;
+    
+}
+#bottom-box {
+    background-color: rgb(253, 0, 203);
+    width: 100%;
+    Height: 30%;
+     display:flex;
+}
+
+#bottom-left {
+    background-color: rgb(1, 21, 132);
+    width: 32.5%;
+    Height: 100%;
+    border-right: 5px solid black;
+    border-top: 5px solid black;
+}
+
+#bottom-middle {
+    background-color: rgb(242, 243, 237);
+    width: 70%;
+    Height: 100%;
+    display:flex;
+    border-top: 5px solid black;
+}
+
+#bottom-right {
+    background-color: rgb(245, 237, 6);
+    width: 25%;
+    Height: 100%;
+    border-top: 5px solid black;
+    border-left: 5px solid black;
+    
+}
+
+#top-left {
+    background-color: rgb(255, 0, 0);
+    width: 26%;
+    Height: 50%;
+    display:flex;
+    border-right: 5px solid black;
+    border-bottom: 10px solid black;
+}
+
+#top-middle {
+    background-color: rgb(255, 255, 255);
+    width: 26%;
+    Height: 50%;
+    display:flex;
+    border-right: 5px solid black;
+    
+}
+
+
+/* ===== Interactive layer (added on top of the original art) ===== */
+#red-painting, #red-orange, #burgandy,
+#white-box, #top-box, #top-left, #top-middle,
+#bottom-box, #bottom-left, #bottom-middle, #bottom-right {
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: filter 0.12s ease;
+}
+
+/* brief flash when a section is touched */
+.hit { filter: brightness(1.25) saturate(1.2); }
+
+/* confetti layer */
+#confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999;
+}
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 12px;
+    border-radius: 2px;
+    border: 0.5px solid rgba(0, 0, 0, 0.35);
+    will-change: transform, opacity;
+}
+
+
+/* ===== Background decor ===== */
+body {
+    min-height: 100vh;
+    background-color: #fbf6ec;
+    background-image:
+        radial-gradient(circle at 20% 15%, rgba(245, 237, 6, 0.18), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(1, 21, 132, 0.10), transparent 40%),
+        radial-gradient(circle at 70% 10%, rgba(211, 25, 12, 0.10), transparent 35%),
+        radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1.5px);
+    background-size: auto, auto, auto, 24px 24px;
+    background-attachment: fixed;
+}
+
+#decor {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.shape {
+    position: absolute;
+    opacity: 0.35;
+    animation: drift var(--dur, 18s) ease-in-out infinite alternate;
+}
+.shape.circle   { border-radius: 50%; }
+.shape.square   { border-radius: 2px; }
+.shape.ring     { border-radius: 50%; background: transparent !important; border: 4px solid currentColor; }
+.shape.triangle {
+    width: 0 !important;
+    height: 0 !important;
+    background: transparent !important;
+    border-left: calc(var(--s) / 2) solid transparent;
+    border-right: calc(var(--s) / 2) solid transparent;
+    border-bottom: var(--s) solid currentColor;
+}
+.shape.line { height: 4px !important; border-radius: 2px; }
+
+@keyframes drift {
+    from { transform: translate(0, 0) rotate(0deg); }
+    to   { transform: translate(var(--dx, 30px), var(--dy, -40px)) rotate(var(--rot, 90deg)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .shape { animation: none; }
+}
+
+/* ===== Instructions panel (on the side) ===== */
+#instructions {
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    width: 270px;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
+    padding: 18px 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border: 2px solid black;
+    box-shadow: 6px 6px 0 rgb(211, 25, 12);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+    color: #1a1a1a;
+    z-index: 5;
+}
+#instructions h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    border-bottom: 5px solid black;
+    padding-bottom: 6px;
+}
+#instructions h3 {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 14px 0 6px;
+}
+#instructions ol { padding-left: 20px; }
+#instructions ol li { margin-bottom: 5px; }
+#instructions .legend { list-style: none; }
+#instructions .legend li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    font-size: 13px;
+}
+#instructions .dot {
+    flex: none;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid black;
+}
+#instructions .note {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #555;
+}
+
+/* On narrow screens the panel drops below the paintings */
+@media (max-width: 640px) {
+    #instructions {
+        position: static;
+        width: auto;
+        max-height: none;
+        margin-top: 24px;
+    }
+}
